@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVerse - <%= product.name %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/Images/Logo/Logo.png">
+    <link rel="stylesheet" href="/css/Main_Style.css">
+    <style>
+
+        #prodetails {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 50px;
+            gap: 40px;
+        }
+
+        #prodetails .single-pro-image {
+            width: 30%;
+            min-width: 300px;
+        }
+
+        #prodetails .single-pro-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        #prodetails .single-pro-details {
+            width: 50%;
+            min-width: 400px;
+            padding-top: 30px;
+        }
+
+        #prodetails .single-pro-details h4 {
+            padding: 20px 0 10px 0;
+            font-size: 26px;
+            color: #333;
+        }
+
+        #prodetails .single-pro-details h2 {
+            font-size: 30px;
+            color: #088178;
+        }
+
+        #prodetails .single-pro-details input[type="number"] {
+            display: block;
+            padding: 8px 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 60px;
+            text-align: center;
+        }
+
+        #prodetails .single-pro-details button {
+            background-color: #088178;
+            color: white;
+            font-size: 16px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #prodetails .single-pro-details button:hover {
+            background-color: #065e56;
+        }
+
+        #prodetails .single-pro-details span {
+            line-height: 25px;
+            color: #555;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .quantity-selector label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .quantity-selector input[type="number"]::-webkit-outer-spin-button,
+        .quantity-selector input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<%- include('partials/header', { currentPage: 'shop', user: user }) %>
+
+<section id="prodetails" class="section-p1">
+    <div class="single-pro-image">
+        <img src="<%= product.mainImage || '/Images/placeholder.jpg' %>" width="100%" id="MainImg" alt="<%= product.name %>">
+    </div>
+
+    <div class="single-pro-details">
+        <h6>Home / <%= product.category %></h6>
+        <h4><%= product.name %></h4>
+        <h2>$<%= product.price.toFixed(2) %></h2>
+
+        <div class="quantity-selector">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" value="1" min="1">
+        </div>
+
+        <button class="normal add-to-cart-btn" data-product-id="<%= product._id %>">Add To Cart</button>
+        <h4>Product Details</h4>
+        <span><%= product.description %></span>
+        <% if (product.brand) { %>
+            <p><strong>Brand:</strong> <%= product.brand %></p>
+        <% } %>
+    </div>
+</section>
+
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="/Images/Logo/TechVerse.png" width="286px" height="82px" alt="TechVerse Logo">
+        <h4>Contact</h4>
+        <p><b>Address :</b> KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
+        <p><b>Email :</b> miu@techverse.eg</p>
+        <p><b>Hotline :</b> (718) 555-1941</p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="/about">About Us</a>
+        <a href="#">Delivery Information</a>
+        <a href="/terms">Terms & Condition</a>
+        <a href="/contact">Contact Us</a>
+    </div>
+
+    <div class="col">
+        <h4>My Account</h4>
+        <a href="/login">Sign In</a>
+        <a href="/cart">View Cart</a>
+    </div>
+
+    <div class="col install">
+        <p>Secured Payment Gateways</p>
+        <img src="/Images/Banner/Visa And Mastercard.jpg" alt="Visa and Mastercard" width="207" height="65">
+    </div>
+
+    <div class="copyright">
+        <p>2025, TechVerse Website</p>
+    </div>
+</footer>
+
+<%- include('partials/common_scripts', { message: message }) %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const addToCartBtn = document.querySelector('.add-to-cart-btn');
+        const quantityInput = document.getElementById('quantity');
+
+        if (addToCartBtn && quantityInput) {
+            addToCartBtn.addEventListener('click', () => {
+                const productId = addToCartBtn.dataset.productId;
+                const quantity = parseInt(quantityInput.value, 10);
+                const productName = document.querySelector('.single-pro-details h4').textContent;
+                const productPrice = parseFloat(document.querySelector('.single-pro-details h2').textContent.replace('$', ''));
+                const productImage = document.getElementById('MainImg').src;
+
+                if (isNaN(quantity) || quantity < 1) {
+                    if (typeof displayAdminMessage === 'function') {
+                        displayAdminMessage('Please enter a valid quantity (at least 1).', 'error-message');
+                    } else {
+                        console.warn('displayAdminMessage not found. Please enter a valid quantity (at least 1).');
+                    }
+                    return;
+                }
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                let itemFound = false;
+                cart.forEach(item => {
+                    if (item.productId === productId) {
+                        item.quantity += quantity;
+                        itemFound = true;
+                    }
+                });
+
+                if (!itemFound) {
+                    cart.push({
+                        productId: productId,
+                        name: productName,
+                        price: productPrice,
+                        mainImage: productImage,
+                        quantity: quantity
+                    });
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                if (typeof displayAdminMessage === 'function') {
+                    displayAdminMessage(`${quantity} x ${productName} added to cart!`, 'success-message');
+                } else {
+                    console.warn(`displayAdminMessage not found. ${quantity} x ${productName} added to cart!`);
+                }
+                
+                
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
