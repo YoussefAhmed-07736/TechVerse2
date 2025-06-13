@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVerse - Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/Images/Logo/Logo.png">
+    <link rel="stylesheet" href="css/Main_Style.css">
+    <style>
+
+        .loading-message {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #555;
+        }
+        .error-message {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: red;
+        }
+
+       
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            gap: 15px; 
+            flex-wrap: wrap; 
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .filter-section input[type="text"],
+        .filter-section select,
+        .filter-section button {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .filter-section button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .filter-section button:hover {
+            background-color: #0056b3;
+        }
+      
+        #pagination-controls {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        #pagination-controls a {
+            color: #007bff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #pagination-controls a.active {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+
+        #pagination-controls a:hover:not(.active) {
+            background-color: #f2f2f2;
+        }
+
+        #pagination-controls a.disabled {
+            color: #ccc;
+            pointer-events: none;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<%- include('partials/header', { currentPage: 'shop', user: user }) %>
+
+<section id="page-header">
+    <h2>The TechVerse Shop</h2>
+    <p>The Only Tech Store You'll Ever Need</p>
+</section>
+
+<section class="filter-section">
+    <input type="text" id="searchInput" placeholder="Search products by name, description, or brand...">
+    <select id="categoryFilter">
+        <option value="All">All Categories</option>
+        <option value="Phone">Phones</option>
+        <option value="Laptop">Laptops</option>
+        <option value="Smartwatch">Smartwatches</option>
+        <option value="Headphones">Headphones</option>
+    </select>
+    <button id="applyFilterBtn">Apply Filters</button>
+</section>
+
+<section id="product1" class="section-p1">
+    <div class="pro-container">
+        <p class="loading-message">Loading products...</p>
+    </div>
+</section>
+
+<section id="pagination-controls">
+</section>
+
+<br>
+<br>
+<br>
+<hr>
+
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="/Images/Logo/TechVerse.png" width="286px" height="82px" alt="TechVerse Logo">
+        <h4>Contact</h4>
+        <p><b>Address :</b> KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
+        <p><b>Email :</b> miu@techverse.eg</p>
+        <p><b>Hotline :</b> (718) 555-1941</p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="/about">About Us</a>
+        <a href="/terms">Terms & Condition</a>
+    </div>
+
+    <div class="col">
+        <h4>My Account</h4>
+        <a href="/login">Sign In</a>
+        <a href="/cart">View Cart</a>
+    </div>
+
+    <div class="col install">
+        <p>Secured Payment Gateways</p>
+        <img src="/Images/Banner/Visa And Mastercard.jpg" alt="Visa and Mastercard" width="207" height="65">
+    </div>
+
+    <div class="copyright">
+        <p>2025, TechVerse Website</p>
+    </div>
+</footer>
+
+
+<%- include('partials/common_scripts') %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const proContainer = document.querySelector('.pro-container');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const applyFilterBtn = document.getElementById('applyFilterBtn');
+        const paginationControls = document.getElementById('pagination-controls');
+
+        let currentPage = 1;
+        const productsPerPage = 9;
+
+
+        const renderProducts = (products) => {
+            proContainer.innerHTML = ''; 
+
+            if (products.length === 0) {
+                proContainer.innerHTML = '<p class="loading-message">No products found matching your criteria.</p>';
+                return;
+            }
+
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('pro');
+               
+
+                const imageUrl = product.mainImage || (product.images && product.images.length > 0 ? product.images[0] : '/Images/placeholder.jpg');
+
+                productDiv.innerHTML = `
+                    <img src="${imageUrl}" alt="${product.name}">
+                    <div class="description">
+                        <span>${product.brand || 'N/A'}</span>
+                        <h5>${product.name}</h5>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>$${product.price.toFixed(2)}</h4>
+                    </div>
+                    <a href= "/product/${product._id}" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+                `;
+                proContainer.appendChild(productDiv);
+            });
+        };
+
+        const renderPaginationControls = (totalPages) => {
+            paginationControls.innerHTML = '';
+
+            if (totalPages <= 1) {
+                return; 
+            }
+            const prevLink = document.createElement('a');
+            prevLink.href = '#';
+            prevLink.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+            prevLink.classList.toggle('disabled', currentPage === 1);
+            prevLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    fetchAndDisplayProducts();
+                }
+            });
+            paginationControls.appendChild(prevLink);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.classList.toggle('active', i === currentPage);
+                pageLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentPage = i;
+                    fetchAndDisplayProducts();
+                });
+                paginationControls.appendChild(pageLink);
+            }
+
+            const nextLink = document.createElement('a');
+            nextLink.href = '#';
+            nextLink.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+            nextLink.classList.toggle('disabled', currentPage === totalPages);
+            nextLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    fetchAndDisplayProducts();
+                }
+            });
+            paginationControls.appendChild(nextLink);
+        };
+
+        const fetchAndDisplayProducts = async () => {
+            proContainer.innerHTML = '<p class="loading-message">Loading products...</p>';
+
+            const searchTerm = searchInput.value;
+            const selectedCategory = categoryFilter.value;
+
+            let apiUrl = '/shop/products';
+            const params = new URLSearchParams();
+
+            if (searchTerm) {
+                params.append('search', searchTerm);
+            }
+            if (selectedCategory && selectedCategory !== 'All') {
+                params.append('category', selectedCategory);
+            }
+            params.append('page', currentPage);
+            params.append('limit', productsPerPage);
+
+            if (params.toString()) {
+                apiUrl += `?${params.toString()}`;
+            }
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to fetch products with filters');
+                }
+            
+                const data = await response.json();
+                renderProducts(data.products);
+                renderPaginationControls(data.totalPages);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                proContainer.innerHTML = `<p class="error-message">Failed to load products. Please try again later. (${error.message})</p>`;
+                paginationControls.innerHTML = ''; 
+            }
+        };
+
+        applyFilterBtn.addEventListener('click', () => {
+            currentPage = 1;
+            fetchAndDisplayProducts();
+        });
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                currentPage = 1;
+                fetchAndDisplayProducts();
+            }
+        });
+        categoryFilter.addEventListener('change', () => {
+            currentPage = 1;
+            fetchAndDisplayProducts();
+        });
+
+        fetchAndDisplayProducts();
+    });
+</script>
+</body>
+</html>
