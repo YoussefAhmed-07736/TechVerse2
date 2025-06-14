@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVerse - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/Images/Logo/Logo.png">
+    <link rel="stylesheet" href="css/Main_Style.css">
+    <link rel="stylesheet" href="css/Admin_Style.css">
+    <style>
+       
+        .delete-btn {
+            background-color: #dc3545; 
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        
+        .admin-data-table img {
+            width: 50px;
+            height: auto;
+            max-height: 50px; 
+            object-fit: cover; 
+            border-radius: 4px;
+        }
+
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .action-buttons select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .action-buttons button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: white;
+            transition: background-color 0.2s;
+        }
+        .change-role-btn {
+            background-color: #28a745;
+        }
+        .change-role-btn:hover {
+            background-color: #218838;
+        }
+        .remove-user-btn {
+            background-color: #dc3545; 
+        }
+        .remove-user-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+
+<%- include('partials/header', { currentPage: 'admin', user: user }) %>
+
+<section id="page-header" class="admin-header" style="background-image: url('/Images/Other/Admin\ Dashboard.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <h2>Admin Dashboard</h2>
+    <p>Manage your website's products and users.</p>
+</section>
+
+<section id="admin-dashboard" class="section-p1">
+    <div class="admin-action-cards">
+        <div class="admin-card">
+            <h3>Add New Product</h3>
+            <p>Add a new item to your online store.</p>
+            <button class="normal" onclick="showSection('add-product-section')">Add Product</button>
+        </div>
+        <div class="admin-card">
+            <h3>Remove Product</h3>
+            <p>Permanently remove an existing product.</p>
+            <button class="normal" onclick="showSection('remove-product-section')">Remove Product</button>
+        </div>
+        <div class="admin-card">
+            <h3>View All Products</h3>
+            <p>See all products currently listed.</p>
+            <button class="normal" onclick="showSection('view-products-section')">View Products</button>
+        </div>
+        <div class="admin-card">
+            <h3>View All Users</h3>
+            <p>Check registered user accounts.</p>
+            <button class="normal" onclick="showSection('view-users-section')">View Users</button>
+        </div>
+    </div>
+
+    <div id="add-product-section" class="admin-section hidden">
+        <h3>Add New Product</h3>
+        <form id="addProductForm" class="admin-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="itemName">Item Name:</label>
+                <input type="text" id="itemName" name="itemName" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand">
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category">
+            </div>
+            <div class="form-group">
+                <label for="productImage">Product Image :</label>
+                <input type="file" id="productImage" name="productImage" accept="image/*">
+            </div>
+            <button type="submit" class="normal">Add Product</button>
+        </form>
+    </div>
+
+    <div id="remove-product-section" class="admin-section hidden">
+        <h3>Remove Product</h3>
+        <p>Select a product from the list below to delete it permanently.</p>
+        <div class="admin-data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="removeProductsTableBody">
+                    <tr><td colspan="5">Loading products for removal...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="view-products-section" class="admin-section hidden">
+        <h3>All Products</h3>
+        <div class="admin-data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                    <tr><td colspan="8">Loading products...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="view-users-section" class="admin-section hidden">
+        <h3>All Users</h3>
+        <div class="admin-data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Joined Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr>
+                        <td colspan="5">Loading users...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+<br>
+<hr>
+
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="/Images/Logo/TechVerse.png" width="286px" height="82px" alt="TechVerse Logo">
+        <h4>Contact</h4>
+        <p><b>Address :</b> KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
+        <p><b>Email :</b> miu@techverse.eg</p>
+        <p><b>Hotline :</b> (718) 555-1941</p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="/about">About Us</a>
+        <a href="/terms">Terms & Condition</a>
+        <a href="/contact">Contact Us</a>
+    </div>
+
+    <div class="col">
+        <h4>My Account</h4>
+        <a href="/login">Sign In</a>
+        <a href="/cart">View Cart</a>
+    </div>
+
+    <div class="col install">
+        <p>Secured Payment Gateways</p>
+        <img src="/Images/Banner/Visa And Mastercard.jpg" alt="Visa and Mastercard" width="207" height="65">
+    </div>
+
+    <div class="copyright">
+        <p>2025, TechVerse Website</p>
+    </div>
+</footer>
+
+<%- include('partials/common_scripts') %>
+
+<script>
+
+    function showSection(sectionId) {  
+        document.querySelectorAll('.admin-section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        
+        document.getElementById(sectionId).classList.remove('hidden');
+
+        const adminMessageDiv = document.getElementById('adminMessage');
+        if (adminMessageDiv) {
+            adminMessageDiv.style.display = 'none';
+            adminMessageDiv.textContent = '';
+            adminMessageDiv.className = 'message'; 
+            adminMessageDiv.classList.remove('visible'); 
+        }
+
+    
+        if (sectionId === 'view-users-section') {
+            fetchAndDisplayUsers();
+        } else if (sectionId === 'view-products-section') {
+            fetchAndDisplayProducts('view-products-section');
+        } else if (sectionId === 'remove-product-section') {
+            fetchAndDisplayProducts('remove-product-section'); 
+        }
+    }
+
+ 
+    async function fetchAndDisplayUsers() {
+        const usersTableBody = document.getElementById('usersTableBody');
+        usersTableBody.innerHTML = '<tr><td colspan="5">Loading users...</td></tr>'; 
+
+        try {
+            
+            const response = await fetch('/admin/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                usersTableBody.innerHTML = `<tr><td colspan="5" style="color: red;">Error: ${errorData.message || 'Failed to fetch users.'}</td></tr>`;
+                return;
+            }
+
+            const users = await response.json();
+
+            if (users.length === 0) {
+                usersTableBody.innerHTML = '<tr><td colspan="5">No users found.</td></tr>';
+            } else {
+                usersTableBody.innerHTML = ''; 
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user._id}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td>${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</td>
+                        <td class="action-buttons">
+                            <select class="user-role-select" data-user-id="${user._id}">
+                                <option value="Customer" ${user.role === 'Customer' ? 'selected' : ''}>Customer</option>
+                                <option value="Admin" ${user.role === 'Admin' ? 'selected' : ''}>Admin</option>
+                            </select>
+                            <button class="change-role-btn" data-user-id="${user._id}">Change Role</button>
+                            <button class="remove-user-btn" data-user-id="${user._id}">Remove</button>
+                        </td>
+                    `;
+                    usersTableBody.appendChild(row);
+                });
+
+                
+                attachUserActionListeners();
+            }
+
+        } catch (error) {
+            console.error('Error fetching users:', error);
+            if (typeof displayAdminMessage === 'function') {
+                displayAdminMessage('An error occurred while fetching users.', 'error-message');
+            }
+            usersTableBody.innerHTML = '<tr><td colspan="5" style="color: red;">An error occurred while fetching users.</td></tr>';
+        }
+    }
+
+ 
+    function attachUserActionListeners() {
+        
+        document.querySelectorAll('.change-role-btn').forEach(button => {
+            button.removeEventListener('click', handleChangeRoleClick);
+            button.addEventListener('click', handleChangeRoleClick);
+        });
+
+        
+        document.querySelectorAll('.remove-user-btn').forEach(button => {
+            button.removeEventListener('click', handleRemoveUserClick); 
+            button.addEventListener('click', handleRemoveUserClick);
+        });
+    }
+
+   
+    async function handleChangeRoleClick(event) {
+        const userId = event.target.dataset.userId;
+        const selectElement = event.target.previousElementSibling;
+        const newRole = selectElement.value;
+
+        
+        if (typeof showConfirmationModal === 'function') {
+            showConfirmationModal(`Change User Role`, `Are you sure you want to change the role of user ID ${userId} to "${newRole}"?`, async (confirmed) => {
+                if (confirmed) {
+                    try {
+                        const response = await fetch(`/admin/users/${userId}/change-role`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ newRole: newRole })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            if (typeof displayAdminMessage === 'function') {
+                                displayAdminMessage(data.message, 'success-message');
+                            }
+                            fetchAndDisplayUsers(); 
+                        } else {
+                            if (typeof displayAdminMessage === 'function') {
+                                displayAdminMessage('Error: ' + data.message, 'error-message');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error changing user role:', error);
+                        if (typeof displayAdminMessage === 'function') {
+                            displayAdminMessage('An error occurred while changing the user role.', 'error-message');
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn('showConfirmationModal not found. Skipping confirmation.');
+            if (confirm(`Are you sure you want to change the role of user ID ${userId} to "${newRole}"?`)) {
+            }
+        }
+    }
+
+   
+    async function handleRemoveUserClick(event) {
+        const userId = event.target.dataset.userId;
+
+        
+        if (typeof showConfirmationModal === 'function') {
+            showConfirmationModal(`Remove User`, `Are you sure you want to PERMANENTLY remove user ID ${userId}? This action cannot be undone.`, async (confirmed) => {
+                if (confirmed) {
+                    try {
+                        const response = await fetch(`/admin/users/${userId}/remove`, {
+                            method: 'DELETE'
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            if (typeof displayAdminMessage === 'function') {
+                                displayAdminMessage(data.message, 'success-message');
+                            }
+                            fetchAndDisplayUsers(); 
+                        } else {
+                            if (typeof displayAdminMessage === 'function') {
+                                displayAdminMessage('Error: ' + data.message, 'error-message');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error removing user:', error);
+                        if (typeof displayAdminMessage === 'function') {
+                            displayAdminMessage('An error occurred while removing the user.', 'error-message');
+                        }
+                    }
+                }
+            });
+        } else {
+             console.warn('showConfirmationModal not found. Skipping confirmation.');
+            if (confirm(`Are you sure you want to PERMANENTLY remove user ID ${userId}? This action cannot be undone.`)) {
+            }
+        }
+    }
+
+    async function fetchAndDisplayProducts(section) {
+        const productsTableBody = document.getElementById('productsTableBody');
+        const removeProductsTableBody = document.getElementById('removeProductsTableBody');
+
+        const targetTableBody = (section === 'view-products-section') ? productsTableBody : removeProductsTableBody;
+
+        targetTableBody.innerHTML = '<tr><td colspan="8">Loading products...</td></tr>'; 
+
+        try {
+            const response = await fetch('/admin/products', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                targetTableBody.innerHTML = `<tr><td colspan="8" style="color: red;">Error: ${errorData.message || 'Failed to fetch products.'}</td></tr>`;
+                return;
+            }
+
+            const products = await response.json();
+
+            if (products.length === 0) {
+                targetTableBody.innerHTML = '<tr><td colspan="8">No products found.</td></tr>';
+            } else {
+                targetTableBody.innerHTML = ''; 
+
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    if (section === 'view-products-section') {
+                        row.innerHTML = `
+                            <td>${product._id}</td>
+                            <td>${product.name}</td>
+                            <td>${product.description}</td>
+                            <td>$${product.price.toFixed(2)}</td>
+                            <td>${product.brand || 'N/A'}</td>
+                            <td>${product.category || 'N/A'}</td>
+                            <td><img src="${product.mainImage || '/Images/placeholder.jpg'}" alt="${product.name}" onerror="this.onerror=null;this.src='/Images/placeholder.jpg';" style="width: 50px; height: auto;"></td>
+                        `;
+                    } else if (section === 'remove-product-section') {
+                            row.innerHTML = `
+                                <td>${product._id}</td>
+                                <td>${product.name}</td>
+                                <td>$${product.price.toFixed(2)}</td>
+                                <td>${product.category || 'N/A'}</td>
+                                <td><button class="delete-btn" data-product-id="${product._id}">Delete</button></td>
+                            `;
+                            row.querySelector('.delete-btn').addEventListener('click', () => {
+                                deleteProduct(product._id);
+                            });
+                    }
+                    targetTableBody.appendChild(row);
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            if (typeof displayAdminMessage === 'function') {
+                displayAdminMessage('An error occurred while fetching products.', 'error-message');
+            }
+            targetTableBody.innerHTML = '<tr><td colspan="8" style="color: red;">An error occurred while fetching products.</td></tr>';
+        }
+    }
+
+    async function deleteProduct(productId) {
+        if (typeof showConfirmationModal === 'function') {
+            showConfirmationModal('Delete Product', `Are you sure you want to delete product ID ${productId}? This action cannot be undone.`, async (confirmed) => {
+                if (confirmed) {
+                    try {
+                        const response = await fetch(`/admin/delete-product/${productId}`, {
+                            method: 'DELETE'
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            if (typeof displayAdminMessage === 'function') {
+                                displayAdminMessage(result.message, 'success-message');
+                            }
+                            
+                            fetchAndDisplayProducts(document.getElementById('remove-product-section').classList.contains('hidden') ? 'view-products-section' : 'remove-product-section');
+                        } else {
+                            if (typeof displayAdminMessage === 'function') {
+                                displayAdminMessage(result.message || 'Failed to delete product.', 'error-message');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error deleting product:', error);
+                        if (typeof displayAdminMessage === 'function') {
+                            displayAdminMessage('An unexpected error occurred during deletion.', 'error-message');
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn('showConfirmationModal not found. Skipping confirmation.');
+            
+            if (confirm(`Are you sure you want to delete product ID ${productId}? This action cannot be undone.`)) {
+            
+            }
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const addProductForm = document.getElementById('addProductForm');
+
+        if (addProductForm) {
+            addProductForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); 
+
+                const formData = new FormData(addProductForm);
+                
+                try {
+                    const response = await fetch('/admin/add-product', {
+                        method: 'POST',
+                        body: formData 
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        if (typeof displayAdminMessage === 'function') {
+                            displayAdminMessage(result.message, 'success-message');
+                        }
+                        addProductForm.reset();
+                        if (!document.getElementById('view-products-section').classList.contains('hidden')) {
+                            fetchAndDisplayProducts('view-products-section');
+                        }
+                    } else {
+                        if (typeof displayAdminMessage === 'function') {
+                            displayAdminMessage(result.message || 'Failed to add product.', 'error-message');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting add product form:', error);
+                    if (typeof displayAdminMessage === 'function') {
+                        displayAdminMessage('An unexpected error occurred. Please try again.', 'error-message');
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
