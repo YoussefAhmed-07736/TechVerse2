@@ -1,0 +1,98 @@
+/* Apply a full-screen background image */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('../Images/Other/Login\ Page\ Image.png'); /* Change this to your background image file */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Form container styling */
+.container {
+  background: rgba(255, 255, 255, 0.9); /* Slight transparency */
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 350px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Logo styling */
+.logo img {
+  width: 100%;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Toggle link under the form */
+.toggle {
+  margin-top: 15px;
+  font-size: 0.9em;
+}
+
+.toggle a {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.toggle a:hover {
+  text-decoration: underline;
+}
+
+.message-box {
+    padding: 10px;
+    margin: 15px auto;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    position: relative;
+}
+.message-box.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.message-box.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}

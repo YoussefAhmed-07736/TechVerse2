@@ -1,0 +1,200 @@
+/* Admin Page Header */
+#page-header.admin-header {
+    background-image: url(../Images/Banner/Admin_Banner.jpg); /* Create or use an image for your admin banner */
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+}
+
+#page-header.admin-header h2,
+#page-header.admin-header p {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Adds a little pop for readability */
+}
+
+/* Admin Dashboard Section */
+#admin-dashboard {
+    padding: 40px 80px;
+}
+
+.admin-action-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.admin-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.admin-card h3 {
+    font-size: 24px;
+    color: #0476b2;
+    margin-bottom: 10px;
+}
+
+.admin-card p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.admin-card button.normal {
+    padding: 12px 25px;
+    background-color: #0476b2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-card button.normal:hover {
+    background-color: #035a8f;
+}
+
+
+/* Admin Sections (Forms and Tables) */
+.admin-section {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 30px;
+    margin-top: 40px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-section h3 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.admin-section.hidden {
+    display: none;
+}
+
+/* Form Styles */
+.admin-form .form-group {
+    margin-bottom: 20px;
+}
+
+.admin-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.admin-form input[type="text"],
+.admin-form input[type="number"],
+.admin-form textarea {
+    width: calc(100% - 20px); /* Adjust for padding */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    transition: border-color 0.3s ease;
+}
+
+.admin-form input[type="text"]:focus,
+.admin-form input[type="number"]:focus,
+.admin-form textarea:focus {
+    border-color: #0476b2;
+    outline: none;
+}
+
+.admin-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+}
+
+/* Table Styles */
+.admin-data-table {
+    overflow-x: auto; /* Enable horizontal scrolling for narrow screens */
+}
+
+.admin-data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-data-table th,
+.admin-data-table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+}
+
+.admin-data-table th {
+    background-color: #f2f2f2;
+    font-weight: 700;
+    color: #0476b2;
+    text-transform: uppercase;
+}
+
+.admin-data-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-data-table tbody tr:hover {
+    background-color: #eef;
+}
+
+.admin-data-table img {
+    max-width: 80px;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Adjustments for buttons within forms */
+.admin-form button.normal {
+    background-color: #0476b2;
+    color: #fff;
+    margin-top: 10px;
+    width: auto; /* Override default button width */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-action-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-card {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    #admin-dashboard {
+        padding: 20px 30px;
+    }
+}
