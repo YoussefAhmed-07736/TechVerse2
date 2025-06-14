@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVerse - Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/Images/Logo/Logo.png">
+    <link rel="stylesheet" href="css/Main_Style.css">
+</head>
+<body>
+
+<%- include('partials/header', { currentPage: 'contact', user: user }) %>
+
+<section id="page-header" class="contact-header">
+    <h2>Contact Us</h2>
+    <p>Get In Touch With Us</p>
+</section>
+
+<section id="contact-details" class="section-p1">
+    <div class="details">
+        <span>Get In Touch</span>
+        <h2>Visit our branch locations or contact us today</h2>
+        <div>
+            <ul>
+                <li>
+                    <i class="fa-solid fa-map"></i>
+                    <p>KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-envelope"></i>
+                    <p>miu@techverse.eg</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-phone"></i>
+                    <p>(718) 555-1941</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-clock"></i>
+                    <p>Monday to Saturday: 9:00 AM To 8:00 PM</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="map">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3449.403346256985!2d31.489390975015226!3d30.16847011268473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14581bab30f3291d%3A0x1b138aefe2d8bedb!2sMisr%20International%20University%20(MIU)!5e0!3m2!1sen!2seg!4v1749820776669!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    </div>
+</section>
+
+<br>
+<hr>
+
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="/Images/Logo/TechVerse.png" alt="TechVerse Logo" width="286px" height="82px">
+        <h4>Contact</h4>
+        <p><b>Address :</b> KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
+        <p><b>Email :</b> miu@techverse.eg</p>
+        <p><b>Hotline :</b> (718) 555-1941</p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="/about">About Us</a>
+        <a href="/terms">Terms & Condition</a>
+        <a href="/contact">Contact Us</a>
+    </div>
+
+    <div class="col">
+        <h4>My Account</h4>
+        <a href="/login">Sign In</a>
+        <a href="/cart">View Cart</a>
+    </div>
+
+    <div class="col install">
+        <p>Secured Payment Gateways</p>
+        <img src="/Images/Banner/Visa And Mastercard.jpg" alt="Visa and Mastercard" width="207" height="65">
+    </div>
+
+    <div class="copyright">
+        <p>2025, TechVerse Website</p>
+    </div>
+</footer>
+
+<%- include('partials/common_scripts') %>
+
+</body>
+</html>
