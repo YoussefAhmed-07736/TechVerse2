@@ -1,4 +1,4 @@
-const User = require('../modules/Users');
+const User = require('../models/Users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretjwtkeythatshouldbeverylongandrandom'; 
