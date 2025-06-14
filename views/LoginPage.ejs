@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="/Images/Logo/Logo.png">
+    <title>Techverse - Login / Signup</title>
+    <link rel="stylesheet" href="css/Login.css" />
+</head>
+<body>
+
+    <section class="container">
+        <div id="formContainer">
+            <div class="logo">
+               <img src="/Images/Logo/Logo2.png" alt="TechVerse Logo"/>
+            </div>
+
+            <div id="authMessage" class="message-box"></div> <form id="loginForm">
+                <h2>Login</h2>
+                <input type="text" id="loginEmail" placeholder="Email" required />
+                <input type="password" id="loginPassword" placeholder="Password" required minlength="6" />
+                <button type="submit">Login</button>
+                <div class="toggle">
+                    Don't have an account? <a href="#" onclick="toggleForm()">Sign up</a>
+                </div>
+            </form>
+
+            <form id="signupForm" style="display: none;">
+                <h2>Sign Up</h2>
+                <input type="text" id="signupEmail" placeholder="Email" required />
+                <input type="password" id="signupPassword" placeholder="Password" required minlength="6" />
+                <button type="submit">Sign Up</button>
+                <div class="toggle">
+                    Already have an account? <a href="#" onclick="toggleForm()">Login</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        function toggleForm() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+            signupForm.style.display = signupForm.style.display === 'none' ? 'block' : 'none';
+
+          
+            const msgBox = document.getElementById('authMessage');
+            if (msgBox) {
+                msgBox.style.display = 'none';
+                msgBox.textContent = '';
+                msgBox.className = 'message-box';
+            }
+        }
+
+        function displayMessage(message, type = 'error') {
+            const msgBox = document.getElementById('authMessage');
+            if (msgBox) {
+                msgBox.textContent = message;
+                msgBox.className = `message-box ${type}`; 
+                msgBox.style.display = 'block';
+                setTimeout(() => {
+                    msgBox.style.display = 'none';
+                    msgBox.textContent = '';
+                    msgBox.className = 'message-box';
+                }, 3000); 
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+           
+            if (!email || !email.includes('@gmail.com')) {
+                displayMessage('Please enter a valid email.', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                displayMessage('Password must be at least 6 characters.', 'error');
+                return;
+            }
+
+            try {
+                
+                const response = await fetch('http://localhost:3000/users/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json(); 
+
+                if (response.ok) { 
+                    displayMessage(data.message, 'success');
+                    
+
+                    setTimeout(() => {
+                       
+                        window.location.href = 'http://localhost:3000/';
+                    }, 1000); 
+
+                } else {
+                    
+                    displayMessage(data.message || 'Login failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error during login fetch:', error);
+                displayMessage('An error occurred during login. Please try again later.', 'error');
+            }
+        });
+
+       
+        document.getElementById('signupForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); 
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value.trim();
+
+            
+            if (!email || !email.includes('@gmail.com')) {
+                displayMessage('Please enter a valid email.', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                displayMessage('Password must be at least 6 characters.', 'error');
+                return;
+            }
+
+            try {
+                
+                const response = await fetch('http://localhost:3000/users/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json(); 
+
+                if (response.ok) {
+                    displayMessage(data.message || 'Signup successful! You can now log in.', 'success');
+                   
+                    setTimeout(() => {
+                        toggleForm(); 
+                    }, 1500); 
+                } else {
+                    displayMessage(data.message || 'Signup failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error during signup fetch:', error);
+                displayMessage('An error occurred during signup. Please try again later.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>
