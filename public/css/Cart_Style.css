@@ -1,7 +1,7 @@
 #cart-header {
         background-image: url('Images/Banner/Cart\ Banner.jpg');
         width: 100%;
-        height: 40vh; /* Adjust height as needed */
+        height: 40vh; 
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

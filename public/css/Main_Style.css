@@ -73,12 +73,12 @@ body {
 
 display: flex;
 align-items: center;
-justify-content: space-between; /*Spaces In Between The Tabs*/
+justify-content: space-between;
 padding: 20px 80px;
 background: #E3E6F3;
 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 z-index: 999;
-position:sticky; /* Make The Navigation Bar Always At The Top*/
+position:sticky;
 top:0;
 left:0;
 

@@ -1,9 +1,8 @@
-/* Apply a full-screen background image */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('../Images/Other/Login\ Page\ Image.png'); /* Change this to your background image file */
+  background-image: url('../Images/Other/Login\ Page\ Image.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -13,9 +12,9 @@ body {
   height: 100vh;
 }
 
-/* Form container styling */
+
 .container {
-  background: rgba(255, 255, 255, 0.9); /* Slight transparency */
+  background: rgba(255, 255, 255, 0.9); 
   padding: 30px 40px;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -24,12 +23,12 @@ body {
   text-align: center;
 }
 
-/* Logo styling */
+
 .logo img {
   width: 100%;
 }
 
-/* Input fields */
+
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -41,7 +40,6 @@ input[type="password"] {
   display: block;
 }
 
-/* Button styling */
 button {
   width: 100%;
   padding: 10px;
@@ -57,7 +55,7 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Toggle link under the form */
+
 .toggle {
   margin-top: 15px;
   font-size: 0.9em;

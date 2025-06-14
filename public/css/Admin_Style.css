@@ -1,6 +1,5 @@
-/* Admin Page Header */
 #page-header.admin-header {
-    background-image: url(../Images/Banner/Admin_Banner.jpg); /* Create or use an image for your admin banner */
+    background-image: url(../Images/Banner/Admin_Banner.jpg);
     background-size: cover;
     background-position: center;
     width: 100%;
@@ -15,10 +14,9 @@
 #page-header.admin-header h2,
 #page-header.admin-header p {
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Adds a little pop for readability */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
 }
 
-/* Admin Dashboard Section */
 #admin-dashboard {
     padding: 40px 80px;
 }
@@ -76,7 +74,7 @@
 }
 
 
-/* Admin Sections (Forms and Tables) */
+
 .admin-section {
     background-color: #fff;
     border: 1px solid #e0e0e0;
@@ -98,7 +96,7 @@
     display: none;
 }
 
-/* Form Styles */
+
 .admin-form .form-group {
     margin-bottom: 20px;
 }
@@ -113,12 +111,12 @@
 .admin-form input[type="text"],
 .admin-form input[type="number"],
 .admin-form textarea {
-    width: calc(100% - 20px); /* Adjust for padding */
+    width: calc(100% - 20px); 
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    box-sizing: border-box; /* Include padding in width calculation */
+    box-sizing: border-box; 
     transition: border-color 0.3s ease;
 }
 
@@ -130,12 +128,12 @@
 }
 
 .admin-form textarea {
-    resize: vertical; /* Allow vertical resizing */
+    resize: vertical; 
 }
 
-/* Table Styles */
+
 .admin-data-table {
-    overflow-x: auto; /* Enable horizontal scrolling for narrow screens */
+    overflow-x: auto;
 }
 
 .admin-data-table table {
@@ -174,15 +172,15 @@
     border-radius: 4px;
 }
 
-/* Adjustments for buttons within forms */
+
 .admin-form button.normal {
     background-color: #0476b2;
     color: #fff;
     margin-top: 10px;
-    width: auto; /* Override default button width */
+    width: auto; 
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
     .admin-action-cards {
         flex-direction: column;

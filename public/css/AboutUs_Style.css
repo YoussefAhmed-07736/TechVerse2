@@ -1,8 +1,7 @@
-/* New CSS rule for the specific About Us header ID */
-        #about-us-header {
+ #about-us-header {
             background-image: url('/Images/Banner/AboutUsBanner.jpg');
             width: 100%;
-        height: 40vh; /* Adjust height as needed */
+        height: 40vh; 
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
