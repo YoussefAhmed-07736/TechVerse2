@@ -1,0 +1,90 @@
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle"></h3>
+        <p id="modalMessage"></p>
+        <div class="modal-buttons">
+            <button class="confirm-btn" id="modalConfirmBtn">Confirm</button>
+            <button class="cancel-btn" id="modalCancelBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+<div id="adminMessage" class="message" style="display: none;"></div>
+<script>
+
+    function displayAdminMessage(message, type) {
+        const adminMessageDiv = document.getElementById('adminMessage');
+        if (!adminMessageDiv) {
+            console.warn('Admin message div not found on this page. Message:', message);
+            return;
+        }
+        adminMessageDiv.textContent = message;
+        adminMessageDiv.className = 'message ' + type; 
+        adminMessageDiv.style.display = 'block';
+        adminMessageDiv.classList.add('visible'); 
+
+        setTimeout(() => {
+            adminMessageDiv.classList.remove('visible'); 
+            setTimeout(() => {
+                adminMessageDiv.style.display = 'none'; 
+                adminMessageDiv.textContent = '';
+                adminMessageDiv.className = 'message'; 
+            }, 500); 
+        }, 5000);
+    }
+
+    
+    let _confirmCallback = null;
+
+    function showConfirmationModal(title, message, onConfirm) {
+        const modal = document.getElementById('confirmationModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+
+       
+        if (!modal || !modalTitle || !modalMessage || !modalConfirmBtn || !modalCancelBtn) {
+            console.error('Confirmation modal elements not found. Cannot show modal.');
+            onConfirm(false);
+            return;
+        }
+
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+        modal.style.display = 'flex'; 
+        _confirmCallback = onConfirm; 
+
+        modalConfirmBtn.onclick = () => {
+            modal.style.display = 'none';
+            if (_confirmCallback) _confirmCallback(true);
+            _confirmCallback = null;
+        };
+
+        modalCancelBtn.onclick = () => {
+            modal.style.display = 'none';
+            if (_confirmCallback) _confirmCallback(false);
+            _confirmCallback = null; 
+        };
+    }
+
+    async function handleLogout() {
+        console.log('Attempting to log out...');
+        showConfirmationModal('Logout Confirmation', 'Are you sure you want to log out?', async (confirmed) => {
+            if (confirmed) {
+                console.log('Logout confirmed by user. Redirecting to /logout...');
+                window.location.href = '/logout';
+            } else {
+                console.log('Logout cancelled by user.');
+            }
+        });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.getElementById('logoutLink');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                handleLogout();
+            });
+        }
+    });
+</script>
