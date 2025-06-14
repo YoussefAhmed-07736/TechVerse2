@@ -3,213 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechVerse - Your Cart</title>
+    <title>TechVerse</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/x-icon" href="/Images/Logo/Logo.png">
-    <link rel="stylesheet" href="/css/Main_Style.css">
-  
-    <style>
-     
-        #cart-header {
-            background-image: url('/Images/Banner/Cart\ Banner\ 2.jpg');
-            width: 100%;
-            height: 40vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-            padding: 14px;
-            color: white; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
-        }
-        
-        #cart-header h2{
-            color: white;
-        }
-
-        #cart-header p{
-            color: white;
-        }
-        
-        #cart {
-            overflow-x: auto;
-            padding: 50px 20px;
-        }
-
-        #cart table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed; 
-            white-space: nowrap; 
-        }
-
-        #cart table img {
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        #cart table td:nth-child(1) { width: 100px; text-align: center; } 
-        #cart table td:nth-child(2) { width: 150px; text-align: center; }
-        #cart table td:nth-child(3) { width: 250px; text-align: left; } 
-        #cart table td:nth-child(4), 
-        #cart table td:nth-child(5), 
-        #cart table td:nth-child(6) { 
-            width: 150px;
-            text-align: center;
-        }
-
-        #cart table thead {
-            border: 1px solid #e2e9e1;
-            border-left: none;
-            border-right: none;
-        }
-
-        #cart table thead td {
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 13px;
-            padding: 18px 0;
-        }
-
-        #cart table tbody tr td {
-            padding-top: 15px;
-        }
-
-        #cart table tbody td {
-            font-size: 13px;
-        }
-
-        #cart table .remove-item-btn {
-            background: none;
-            border: none;
-            color: #dc3545;
-            font-size: 18px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        #cart table .remove-item-btn:hover {
-            color: #c82333;
-        }
-
-        
-        #cart table .item-quantity-input {
-            width: 50px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            text-align: center;
-            
-        }
-        #cart table .item-quantity-input::-webkit-outer-spin-button,
-        #cart table .item-quantity-input::-webkit-inner-spin-button {
-            -webkit-appearance: none; 
-            margin: 0;
-        }
-
-
-        #cart-add {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end; 
-            padding: 50px 20px 0 20px;
-        }
-
-       
-
-        #subtotal {
-            width: 45%; 
-            margin-bottom: 30px;
-            border: 1px solid #e2e9e1;
-            padding: 30px;
-        }
-
-        #subtotal table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        #subtotal table td {
-            padding: 10px;
-            border: 1px solid #e2e9e1;
-            font-size: 13px;
-        }
-
-        #subtotal button {
-            width: 100%;
-        }
-
-       
-        @media (max-width: 799px) {
-            #cart-add {
-                flex-direction: column;
-                justify-content: center; 
-            }
-            
-            #subtotal {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="css/Main_Style.css">
+    </head>
 <body>
 
-<%- include('partials/header', { currentPage: 'cart', user: user }) %>
+<%- include('partials/header', { currentPage: 'home', user: user }) %>
 
-<section id="cart-header">
-    <h2>Cart</h2>
-    <p>Your shopping cart</p>
+<section id="Hero_Section">
+    <h4>TechVerse</h4>
+    <h2>Your Gateway To The</h2>
+    <h1>Future of Electronics</h1>
+    <p>Discover top-tier gadgets, accessories, and exclusive deals — all in one place</p>
+    <a href="/shop"><button>Shop Now</button></a>
 </section>
 
-<section id="cart" class="section-p1">
-    <table>
-        <thead>
-            <tr>
-                <td>Remove</td>
-                <td>Image</td>
-                <td>Product</td>
-                <td>Price</td>
-                <td>Quantity</td>
-                <td>Subtotal</td>
-            </tr>
-        </thead>
-        <tbody id="cart-items-container">
-        </tbody>
-    </table>
-</section>
-
-<section id="cart-add" class="section-p1">
-    <div id="subtotal">
-        <h3>Cart Totals</h3>
-        <table>
-            <tr>
-                <td>Cart Subtotal</td>
-                <td id="cart-subtotal">$0.00</td>
-            </tr>
-            <tr>
-                <td>Shipping</td>
-                <td>Free</td>
-            </tr>
-            <tr>
-                <td><strong>Total</strong></td>
-                <td><strong id="cart-total">$0.00</strong></td>
-            </tr>
-        </table>
-        <button class="normal">Proceed to checkout</button>
+<section id="Features" class="section-p1">
+    <div class="Feature_Box">
+        <img src="/Images/Features/Free Delivery.png" alt="Free Shipping">
+        <h6>Free Shipping</h6>
+    </div>
+    <div class="Feature_Box">
+        <img src="/Images/Features/Save Money.png" alt="Save Money">
+        <h6>Save Money</h6>
+    </div>
+    <div class="Feature_Box">
+        <img src="/Images/Features/Promotions.png" alt="Promotions">
+        <h6>Promotions</h6>
+    </div>
+    <div class="Feature_Box">
+        <img src="/Images/Features/Eco-Friendly.png" alt="Eco-Friendly">
+        <h6>Eco-Friendly Packaging</h6>
+    </div>
+    <div class="Feature_Box">
+        <img src="/Images/Features/New Arrivals.png" alt="New Arrivals">
+        <h6>New Arrivals</h6>
+    </div>
+    <div class="Feature_Box">
+        <img src="/Images/Features/Fast Delivery.png" alt="Fast Delivery">
+        <h6>Fast Delivery</h6>
     </div>
 </section>
+
+<section id="small-banner" class="section -p1">
+    <div class="banner-box1">
+        <h4>Welcome To The Future</h4>
+        <h2>Apple Intelligence</h2>
+        <span>Where Innovation Meets Intuition.<br> With The Power To Understand, Assist, And Evolve,<br> A New Era Of Smart Technology Begins</span>
+    </div>
+    <div class="banner-box2">
+        <h4>Say Hello To</h4>
+        <h2>Galaxy AI</h2>
+        <span>The Future Of Smart Technology Is Here.<br>Where Innovation Meets Intelligence <br>To Redefine Tech As We Know It</span>
+    </div>
+</section>
+
+<section id="product1" class="section-p1">
+    <h2>Hot Drops</h2>
+    <p>The Drop You’ve Been Waiting For</p>
+    <div class="pro-container">
+        <div class="pro" onclick="window.location.href='/product/684c0f7f4f652d3eb8f84868'">
+            <img src="/Images/Products/iPhone 16.jpg" alt="iphone 16">
+            <div class="description">
+                <span>Apple</span>
+                <h5>iphone 16</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$799</h4>
+            </div>
+            <a href="/product/684c0f7f4f652d3eb8f84868" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c10d44f652d3eb8f84883'">
+            <img src="/Images/Products/Samsung 25 Ultra.jpeg" alt="Samsung 25 Ultra">
+            <div class="description">
+                <span>Samsung</span>
+                <h5>Samsung 25 Ultra</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$1,299</h4>
+            </div>
+            <a href="/product/684c10d44f652d3eb8f84883" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c17624f652d3eb8f848ae'">
+            <img src="/Images/Products/Samsung Galaxy A56.jpg" alt="Samsung Galaxy A56">
+            <div class="description">
+                <span>Samsung</span>
+                <h5>Samsung Galaxy A56</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$439</h4>
+            </div>
+            <a href="/product/684c17624f652d3eb8f848ae" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+    </div>
+</section>
+
+<section id="banner" class="section-m1">
+    <h4>Upgrade Your Tech</h4>
+    <h2>Up To <span>20% Off</span> - Find The Best Deals On Electronics and Accessories</h2>
+    <a href="/shop"><button class="normal">Shop Now</button></a>
+</section>
+
+<section id="product1" class="section-p1">
+    <h2>Best Sellers</h2>
+    <p>Our Most Bought Products</p>
+    <div class="pro-container">
+        <div class="pro" onclick="window.location.href='/product/684c0f7f4f652d3eb8f84868'">
+            <img src="/Images/Products/iPhone 16.jpg" alt="iphone 16">
+            <div class="description">
+                <span>Apple</span>
+                <h5>iphone 16</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$799</h4>
+            </div>
+            <a href="/product/YOUR_IPHONE_16_ID_HERE" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/YOUR_SAMSUNG_GALAXY_A15_ID_HERE'">
+            <img src="/Images/Products/Samsung Galaxy A15.jpg" alt="Samsung Galaxy A15">
+            <div class="description">
+                <span>Samsung</span>
+                <h5>Samsung Galaxy A15</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$150</h4>
+            </div>
+            <a href="/product/YOUR_SAMSUNG_GALAXY_A15_ID_HERE" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c12e14f652d3eb8f84889'">
+            <img src="/Images/Products/Apple iPad Pro.png" alt="ipad Pro">
+            <div class="description">
+                <span>Apple</span>
+                <h5>Apple ipad Pro</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$1200</h4>
+            </div>
+            <a href="/product/684c12e14f652d3eb8f84889" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c13764f652d3eb8f8488d'">
+            <img src="/Images/Products/Microsoft Surface Laptop 7th Edition.jpg" alt="Microsoft Surface Laptop 7th Edition">
+            <div class="description">
+                <span>Microsoft</span>
+                <h5>Microsoft Surface Laptop 7th Edition</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$899</h4>
+            </div>
+            <a href="/product/684c13764f652d3eb8f8488d" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c13de4f652d3eb8f84891'">
+            <img src="/Images/Products/Apple MacBook Air.jpg" alt="Apple MacBook Air">
+            <div class="description">
+                <span>Apple</span>
+                <h5>Apple MacBook Air</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$1199</h4>
+            </div>
+            <a href="/product/684c13de4f652d3eb8f84891" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c14364f652d3eb8f84895'">
+            <img src="/Images/Products/Asus Zenbook S 14.png" alt="Asus Zenbook S 14">
+            <div class="description">
+                <span>Asus</span>
+                <h5>Asus Zenbook S 14</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$999</h4>
+            </div>
+            <a href="/product/684c14364f652d3eb8f84895" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c14cd4f652d3eb8f84899'">
+            <img src="/Images/Products/Apple Watch Series 10.jpg" alt="Apple Watch Series 10">
+            <div class="description">
+                <span>Apple</span>
+                <h5>Apple Watch Series 10</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$699</h4>
+            </div>
+            <a href="/product/684c14cd4f652d3eb8f84899" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c15404f652d3eb8f8489d'">
+            <img src="/Images/Products/HUAWEI Watch GT5.png" alt="Huawei Watch GT5">
+            <div class="description">
+                <span>Huawei</span>
+                <h5>Huawei Watch GT5</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$270</h4>
+            </div>
+            <a href="/product/684c15404f652d3eb8f8489d" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c16ee4f652d3eb8f848ab'">
+            <img src="/Images/Products/Samsung Galaxy Watch 7.png" alt="Samsung Galaxy Watch 7">
+            <div class="description">
+                <span>Samsung</span>
+                <h5>Samsung Galaxy Watch 7</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$330</h4>
+            </div>
+            <a href="/product/684c16ee4f652d3eb8f848ab" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c15c04f652d3eb8f848a0'">
+            <img src="/Images/Products/Apple Airpods 4.jpg" alt="Apple Airpods 4">
+            <div class="description">
+                <span>Apple</span>
+                <h5>Apple Airpods 4</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$180</h4>
+            </div>
+            <a href="/product/684c15c04f652d3eb8f848a0" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c161c4f652d3eb8f848a3'">
+            <img src="/Images/Products/Sony WF-1000XM5.jpg" alt="Sony WF-1000XM5">
+            <div class="description">
+                <span>Sony</span>
+                <h5>Sony WF-1000XM5</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$299</h4>
+            </div>
+            <a href="/product/684c161c4f652d3eb8f848a3" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+        <div class="pro" onclick="window.location.href='/product/684c16764f652d3eb8f848a6'">
+            <img src="/Images/Products/Apple Airpods 2.jpg" alt="Apple Airpods 2">
+            <div class="description">
+                <span>Apple</span>
+                <h5>Apple Airpods Pro 2nd Generation</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>$250</h4>
+            </div>
+            <a href="/product/684c16764f652d3eb8f848a6" class="cart2"><i class="fa-solid fa-cart-plus"></i></a>
+        </div>
+    </div>
+</section>
+
+<hr>
 
 <footer class="section-p1">
     <div class="col">
         <img class="logo" src="/Images/Logo/TechVerse.png" width="286px" height="82px" alt="TechVerse Logo">
         <h4>Contact</h4>
-        <p><b>Address :</b> KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
+        <p><b>Address :</b> KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
         <p><b>Email :</b> miu@techverse.eg</p>
         <p><b>Hotline :</b> (718) 555-1941</p>
         <div class="follow">
@@ -248,129 +365,5 @@
 
 <%- include('partials/common_scripts') %>
 
-<script>
-
-document.addEventListener('DOMContentLoaded', () => {
-        const cartItemsContainer = document.getElementById('cart-items-container');
-        const cartSubtotalElement = document.getElementById('cart-subtotal');
-        const cartTotalElement = document.getElementById('cart-total');
-
-        
-        const renderCartItems = () => {
-            cartItemsContainer.innerHTML = '';
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">Your cart is empty. <a href="/shop">Continue Shopping</a></td></tr>';
-            } else {
-                cart.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.setAttribute('data-product-id', item.productId);
-                    row.innerHTML = `
-                        <td><button class="remove-item-btn" data-product-id="${item.productId}"><i class="fa-solid fa-trash"></i></button></td>
-                        <td><img src="${item.mainImage || '/Images/placeholder.jpg'}" alt="${item.name}"></td>
-                        <td>${item.name}</td>
-                        <td>$${item.price.toFixed(2)}</td>
-                        <td><input type="number" value="${item.quantity}" min="1" class="item-quantity-input" data-product-id="${item.productId}"></td>
-                        <td>$${(item.price * item.quantity).toFixed(2)}</td>
-                    `;
-                    cartItemsContainer.appendChild(row);
-                });
-            }
-            updateCartTotals();
-        };
-
-      
-        const updateCartTotals = () => {
-            let subtotal = 0;
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            cart.forEach(item => {
-                subtotal += item.price * item.quantity;
-            });
-
-            cartSubtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-            cartTotalElement.textContent = `$${subtotal.toFixed(2)}`;
-        };
-
-        
-        const handleRemoveItem = (productId) => {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart = cart.filter(item => item.productId !== productId);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCartItems();
-        };
-
-        
-        const handleQuantityChange = (productId, newQuantity) => {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const qty = parseInt(newQuantity, 10); //
-
-            if (isNaN(qty) || qty < 1) {
-                
-                if (typeof displayAdminMessage === 'function') {
-
-                    displayAdminMessage('Quantity must be at least 1.', 'error-message');
-                } else {
-                    console.warn('displayAdminMessage function not available. Quantity must be at least 1.');
-                    
-                }
-                
-                
-                const itemToRevert = cart.find(item => item.productId === productId);
-                if (itemToRevert) {
-                    const inputElement = document.querySelector(`.item-quantity-input[data-product-id="${productId}"]`);
-                    if (inputElement) {
-                        inputElement.value = itemToRevert.quantity; 
-                    }
-                }
-                return;
-            }
-
-            cart = cart.map(item => {
-                if (item.productId === productId) {
-                    item.quantity = qty;
-                }
-                return item;
-            });
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCartItems(); 
-        };
-
-        cartItemsContainer.addEventListener('click', (event) => {
-            if (event.target.closest('.remove-item-btn')) {
-                const button = event.target.closest('.remove-item-btn');
-                const productId = button.dataset.productId;
-                if (typeof showConfirmationModal === 'function') {
-                    showConfirmationModal('Remove Item', 'Are you sure you want to remove this item from your cart?', (confirmed) => {
-                        if (confirmed) {
-                            handleRemoveItem(productId);
-                            if (typeof displayAdminMessage === 'function') {
-                                displayAdminMessage('Item removed from cart!', 'success-message');
-                            }
-                        }
-                    });
-                } else {
-                    console.warn('showConfirmationModal function not available. Falling back to browser confirm.');
-                    if (confirm('Are you sure you want to remove this item from your cart?')) {
-                        handleRemoveItem(productId);
-                    }
-                }
-            }
-        });
-
-        cartItemsContainer.addEventListener('change', (event) => {
-            if (event.target.classList.contains('item-quantity-input')) {
-                const input = event.target;
-                const productId = input.dataset.productId;
-                const newQuantity = input.value;
-                handleQuantityChange(productId, newQuantity);
-            }
-        });
-
-        renderCartItems();
-    });
-</script>
 </body>
 </html>
