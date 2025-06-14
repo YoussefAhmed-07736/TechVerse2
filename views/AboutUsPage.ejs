@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVerse - About Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/Images/Logo/Logo.png">
+    <link rel="stylesheet" href="css/Main_Style.css">
+    <link rel="stylesheet" href="css/AboutUs_Style.css">
+</head>
+<body>
+
+<%- include('partials/header', { currentPage: 'about', user: user }) %>
+
+<section id="about-us-header">
+    <h2>About Us</h2>
+    <p>Get To know More About Our Website</p>
+</section>
+
+<section id="about-head" class="section-p1">
+    <br>
+    <br>
+    <div>
+        <img src="/Images/Logo/Logo.png" alt="TechVerse Logo">
+        <h2>We are Techverse!</h2>
+        <p>Welcome to our corner of the internet where we explore the ever-changing world of technology.<br> We believe that tech is always changing, and it brings really cool new things.</p>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <div>
+        <h2>Who Are We ?</h2>
+        <p> We're a group of people who are really interested in technology. <br> We love seeing new gadgets and finding out how they can make life better. <br> We wanted to create a place where everyone can learn about and find cool tech without feeling confused.</p>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <div>
+        <h2>Our Goal</h2>
+        <p>Our main goal is to make technology easy to understand for everyone.<br> We want to be your guide in the world of tech, helping you discover exciting products and learn how they can fit into your life.<br> We aim to take away the confusion and make finding the right tech simple.</p>
+    </div>
+</section>
+
+<br>
+<hr>
+
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="/Images/Logo/TechVerse.png" alt="TechVerse Logo" width="286px" height="82px">
+        <h4>Contact</h4>
+        <p><b>Address :</b> KM 28 Cairo – Ismailia Road، Ahmed Orabi District، القاهرة</p>
+        <p><b>Email :</b> miu@techverse.eg</p>
+        <p><b>Hotline :</b> (718) 555-1941</p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="/about">About Us</a>
+        <a href="/terms">Terms & Condition</a>
+        <a href="/contact">Contact Us</a>
+    </div>
+
+    <div class="col">
+        <h4>My Account</h4>
+        <a href="/login">Sign In</a>
+        <a href="/cart">View Cart</a>
+    </div>
+
+    <div class="col install">
+        <p>Secured Payment Gateways</p>
+        <img src="/Images/Banner/Visa And Mastercard.jpg" alt="Visa and Mastercard" width="207" height="65">
+    </div>
+
+    <div class="copyright">
+        <p>2025, TechVerse Website</p>
+    </div>
+</footer>
+
+<%- include('partials/common_scripts') %>
+
+</body>
+</html>
